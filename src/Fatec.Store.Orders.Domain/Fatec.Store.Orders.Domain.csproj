@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Fatec.Store.Framework.Core\Core\Store.Framework.Core.csproj" />
+  </ItemGroup>
+
 </Project>

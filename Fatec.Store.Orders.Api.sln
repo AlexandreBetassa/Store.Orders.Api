@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fatec.Store.Orders.Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fatec.Store.Orders.Domain", "src\Fatec.Store.Orders.Domain\Fatec.Store.Orders.Domain.csproj", "{BF282CD3-7C54-410D-954B-DEFBD432A17B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fatec.Store.Orders.Infrastructure", "src\Fatec.Store.Orders.Infrastructure\Fatec.Store.Orders.Infrastructure.csproj", "{ADF12D22-EF17-4694-9272-F50CB829F554}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fatec.Store.Orders.Infrastructure.Data", "src\Fatec.Store.Orders.Infrastructure\Fatec.Store.Orders.Infrastructure.Data.csproj", "{ADF12D22-EF17-4694-9272-F50CB829F554}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
