@@ -18,6 +18,10 @@ namespace Fatec.Store.Orders.Api.IoC
         {
             var appSettingsConfigurations = services.AddConfigurations(builder);
 
+            services.AddControllers();
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+
             services.InjectAuthenticationSwagger();
             services.InjectContext(appSettingsConfigurations);
             services.InjectRepositories();
