@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fatec.Store.Orders.Domain",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fatec.Store.Orders.Infrastructure.Data", "src\Fatec.Store.Orders.Infrastructure\Fatec.Store.Orders.Infrastructure.Data.csproj", "{ADF12D22-EF17-4694-9272-F50CB829F554}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fatec.Store.Orders.Infrastructure.CrossCutting", "Fatec.Store.Orders.Infrastructure.CrossCutting\Fatec.Store.Orders.Infrastructure.CrossCutting.csproj", "{E1235856-32F5-40D6-BC2A-809D7F884786}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{ADF12D22-EF17-4694-9272-F50CB829F554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADF12D22-EF17-4694-9272-F50CB829F554}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADF12D22-EF17-4694-9272-F50CB829F554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1235856-32F5-40D6-BC2A-809D7F884786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1235856-32F5-40D6-BC2A-809D7F884786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1235856-32F5-40D6-BC2A-809D7F884786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1235856-32F5-40D6-BC2A-809D7F884786}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{697BEAC5-C479-49EB-8595-9FC7CD3B66E7} = {2E5EF370-725B-4AD3-87AA-D04F54562A77}
 		{BF282CD3-7C54-410D-954B-DEFBD432A17B} = {D65EB4F0-EF78-4463-8631-C4DC0782609F}
 		{ADF12D22-EF17-4694-9272-F50CB829F554} = {4C1FA0F9-0667-49E9-9680-C596FFC5D8BB}
+		{E1235856-32F5-40D6-BC2A-809D7F884786} = {4C1FA0F9-0667-49E9-9680-C596FFC5D8BB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {140A015C-C851-491A-8FBD-406459654B78}

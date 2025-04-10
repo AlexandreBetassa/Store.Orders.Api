@@ -10,12 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Fatec.Store.Orders.Infrastructure.CrossCutting\Fatec.Store.Orders.Infrastructure.CrossCutting.csproj" />
+    <ProjectReference Include="..\Fatec.Store.Orders.Infrastructure\Fatec.Store.Orders.Infrastructure.Data.csproj" />
   </ItemGroup>
 
 </Project>
