@@ -1,4 +1,5 @@
-﻿using Fatec.Store.Orders.Domain.v1.Interfaces;
+﻿using Fatec.Store.Framework.Core.Enums;
+using Fatec.Store.Orders.Domain.v1.Interfaces;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Repositories;
@@ -7,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Store.Framework.Core.Enums;
 using System.Text;
 
 namespace Fatec.Store.Orders.Api.IoC
@@ -43,7 +43,7 @@ namespace Fatec.Store.Orders.Api.IoC
 
         private static void InjectRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IOrdersRepository, OrdersRepository>();
+            services.AddTransient<IOrdersRepository, OrdersRepository>();
         }
 
         private static void InjectContext(this IServiceCollection services, AppsettingsConfigurations appSettingsConfigurations) =>

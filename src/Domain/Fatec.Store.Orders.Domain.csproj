@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Fatec.Store.Framework.Core\Core\Store.Framework.Core.csproj" />
+    <PackageReference Include="Fatec.Store.Framework.Core" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
