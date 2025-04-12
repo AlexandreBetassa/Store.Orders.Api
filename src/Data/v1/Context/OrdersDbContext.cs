@@ -1,4 +1,5 @@
 ﻿using Fatec.Store.Orders.Domain.v1.Entities;
+using Fatec.Store.Orders.Domain.v1.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fatec.Store.Orders.Infrastructure.Data.v1.Context
@@ -21,17 +22,31 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Context
                 .HasForeignKey(o => o.AddressId);
 
             modelBuilder.Entity<Order>()
-                .OwnsOne(x => x.FormOfPayment);
+                .HasOne(o => o.Contact)
+                .WithMany(oc => oc.Orders)
+                .HasForeignKey(o => o.ContactId);
 
             modelBuilder.Entity<Product>()
                 .HasOne(po => po.Order)
                 .WithMany(o => o.Products)
                 .HasForeignKey(po => po.OrderId);
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Contact)
-                .WithMany(oc => oc.Orders)
-                .HasForeignKey(o => o.ContactId);
+            modelBuilder.Entity<FormOfPayment>()
+                .HasOne(po => po.Order)
+                .WithMany(o => o.FormOfPayments)
+                .HasForeignKey(po => po.OrderId);
+
+            modelBuilder.Entity<FormOfPayment>()
+                .Ignore(x => x.Status);
+
+            modelBuilder.Entity<Product>()
+                .Ignore(x => x.Status);
+
+            modelBuilder.Entity<DeliveryAddress>()
+                .Ignore(x => x.Status);
+
+            modelBuilder.Entity<Contact>()
+                .Ignore(x => x.Status);
         }
     }
 }

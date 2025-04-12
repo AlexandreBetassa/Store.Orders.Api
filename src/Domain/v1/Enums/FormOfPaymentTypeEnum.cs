@@ -2,10 +2,6 @@
 {
     public enum FormOfPaymentTypeEnum
     {
-        Cash,
-
-        CreditCard,
-
-        DebitCard
+        Cash
     }
 }

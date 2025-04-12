@@ -17,9 +17,7 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
 
         public DeliveryAddress Address { get; set; }
 
-        public int FormOfPaymentId { get; set; }
-
-        public FormOfPayment FormOfPayment { get; set; }
+        public IEnumerable<FormOfPayment> FormOfPayments { get; set; }
 
         public int ContactId { get; set; }
 

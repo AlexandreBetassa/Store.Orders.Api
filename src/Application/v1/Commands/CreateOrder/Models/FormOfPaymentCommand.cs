@@ -1,8 +1,8 @@
 ﻿using Fatec.Store.Orders.Domain.v1.Enums;
 
-namespace Fatec.Store.Orders.Domain.v1.Models
+namespace Fatec.Store.Orders.Application.v1.Commands.CreateOrder.Models
 {
-    public class FormOfPayment
+    public class FormOfPaymentCommand
     {
         public FormOfPaymentTypeEnum FormOfPaymentType { get; set; }
 
