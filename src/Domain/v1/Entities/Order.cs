@@ -1,5 +1,4 @@
 ﻿using Fatec.Store.Framework.Core.Bases.v1.Entities;
-using Fatec.Store.Orders.Domain.v1.Models;
 
 namespace Fatec.Store.Orders.Domain.v1.Entities
 {
@@ -24,5 +23,9 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
         public Contact Contact { get; set; }
 
         public IEnumerable<Product> Products { get; set; }
+
+        public void CalculateTotalDiscount() => TotalDiscount = FormOfPayments.Sum(p => p.TotalDiscount);
+
+        public void CalculateTotalAmount() => TotalAmount = Products.Sum(p => p.Amount * p.Quantity) - TotalDiscount;
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Fatec.Store.Framework.Core.Bases.v1.Entities;
-using Fatec.Store.Orders.Domain.v1.Entities;
 using Fatec.Store.Orders.Domain.v1.Enums;
 
-namespace Fatec.Store.Orders.Domain.v1.Models
+namespace Fatec.Store.Orders.Domain.v1.Entities
 {
     public class FormOfPayment : BaseEntity
     {

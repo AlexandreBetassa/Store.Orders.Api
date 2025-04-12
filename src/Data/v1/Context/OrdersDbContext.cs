@@ -1,5 +1,4 @@
 ﻿using Fatec.Store.Orders.Domain.v1.Entities;
-using Fatec.Store.Orders.Domain.v1.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fatec.Store.Orders.Infrastructure.Data.v1.Context
