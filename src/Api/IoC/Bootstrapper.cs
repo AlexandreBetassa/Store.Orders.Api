@@ -1,4 +1,5 @@
 ﻿using Fatec.Store.Framework.Core.Enums;
+using Fatec.Store.Orders.Application.v1.Commands.CreateOrder;
 using Fatec.Store.Orders.Domain.v1.Interfaces;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
@@ -18,12 +19,8 @@ namespace Fatec.Store.Orders.Api.IoC
         {
             var appSettingsConfigurations = services.AddConfigurations(builder);
 
-            services.AddControllers();
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
-
-            services.InjectAuthenticationSwagger();
             services.InjectContext(appSettingsConfigurations);
+            services.InjectAuthenticationSwagger();
             services.InjectRepositories();
             services.InjectMediator();
             services.InjectAutoMapper();
@@ -33,13 +30,11 @@ namespace Fatec.Store.Orders.Api.IoC
 
         private static void InjectAutoMapper(this IServiceCollection services)
         {
-            //services.AddAutoMapper(opt => opt.AddMaps(typeof(CreateUserCommand).Assembly));
+            services.AddAutoMapper(opt => opt.AddMaps(typeof(CreateOrderCommandProfile).Assembly));
         }
 
-        private static void InjectMediator(this IServiceCollection services)
-        {
-            //services.AddMediatR(new MediatRServiceConfiguration().RegisterServicesFromAssemblyContaining(typeof(GenerateTokenCommandHandler)));
-        }
+        private static void InjectMediator(this IServiceCollection services) =>
+            services.AddMediatR(new MediatRServiceConfiguration().RegisterServicesFromAssemblyContaining(typeof(CreateOrderCommand)));
 
         private static void InjectRepositories(this IServiceCollection services)
         {
