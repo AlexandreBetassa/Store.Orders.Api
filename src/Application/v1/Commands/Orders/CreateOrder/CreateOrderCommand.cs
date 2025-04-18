@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 {
-    public class CreateOrderCommand : IRequest<Unit>
+    public class CreateOrderCommand : IRequest<CreateOrderCommandResponse>
     {
         public int CustomerId { get; set; }
 

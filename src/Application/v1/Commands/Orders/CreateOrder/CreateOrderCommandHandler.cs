@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 {
-    public class CreateOrderCommandHandler : BaseCommandHandler<CreateOrderCommand, Unit>
+    public class CreateOrderCommandHandler : BaseCommandHandler<CreateOrderCommand, CreateOrderCommandResponse>
     {
         private readonly IOrdersRepository _ordersRepository;
 
@@ -22,7 +22,7 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
             _ordersRepository = ordersRepository;
         }
 
-        public override async Task<Unit> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public override async Task<CreateOrderCommandResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -31,10 +31,9 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
                 order.CalculateTotalDiscount();
                 order.CalculateTotalAmount();
 
-                await _ordersRepository.CreateAsync(order);
-                await _ordersRepository.SaveChangesAsync();
+                var orderId = await _ordersRepository.CreateAsync(order);
 
-                return Unit.Value;
+                return new() { OrderId = orderId };
             }
             catch (Exception ex)
             {
