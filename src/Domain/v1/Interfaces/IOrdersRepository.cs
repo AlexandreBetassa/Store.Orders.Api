@@ -5,5 +5,6 @@ namespace Fatec.Store.Orders.Domain.v1.Interfaces
 {
     public interface IOrdersRepository : IRepository<Order>
     {
+        Task<IEnumerable<Order>> GetOrdersByCustomerIdAsync(int customerId);
     }
 }
