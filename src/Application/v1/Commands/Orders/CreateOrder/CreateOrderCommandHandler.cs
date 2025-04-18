@@ -38,6 +38,7 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 
                 await TryAssignAddressAsync(
                     zipCode: request.Address.ZipCode,
+                    number: request.Address.Number,
                     order: order);
 
                 await TryAssignContactAsync(
@@ -57,12 +58,12 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
             }
         }
 
-        private async Task TryAssignAddressAsync(string zipCode, Order order)
+        private async Task TryAssignAddressAsync(string zipCode, string number, Order order)
         {
             if (string.IsNullOrWhiteSpace(zipCode))
                 return;
 
-            var address = await _addressRepository.GetAddressByZipCodeAsync(zipCode: zipCode);
+            var address = await _addressRepository.GetAddressByZipCodeAndNumberAsync(zipCode: zipCode, number: number);
 
             if (address is not null)
             {
