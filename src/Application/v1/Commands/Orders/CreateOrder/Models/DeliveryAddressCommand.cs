@@ -1,4 +1,4 @@
-﻿namespace Fatec.Store.Orders.Application.v1.Commands.CreateOrder.Models
+﻿namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder.Models
 {
     public class DeliveryAddressCommand
     {

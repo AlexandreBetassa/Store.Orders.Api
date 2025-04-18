@@ -1,5 +1,5 @@
 ﻿using Fatec.Store.Framework.Core.Bases.v1.Controllers;
-using Fatec.Store.Orders.Application.v1.Commands.CreateOrder;
+using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

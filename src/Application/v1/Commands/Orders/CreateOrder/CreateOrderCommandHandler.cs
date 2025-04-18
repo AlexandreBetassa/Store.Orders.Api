@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Fatec.Store.Orders.Application.v1.Commands.CreateOrder
+namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 {
     public class CreateOrderCommandHandler : BaseCommandHandler<CreateOrderCommand, Unit>
     {

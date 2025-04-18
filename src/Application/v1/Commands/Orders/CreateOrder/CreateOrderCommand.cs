@@ -1,7 +1,7 @@
-﻿using Fatec.Store.Orders.Application.v1.Commands.CreateOrder.Models;
+﻿using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder.Models;
 using MediatR;
 
-namespace Fatec.Store.Orders.Application.v1.Commands.CreateOrder
+namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 {
     public class CreateOrderCommand : IRequest<Unit>
     {

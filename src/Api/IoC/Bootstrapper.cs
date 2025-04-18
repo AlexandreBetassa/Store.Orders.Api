@@ -1,5 +1,5 @@
 ﻿using Fatec.Store.Framework.Core.Enums;
-using Fatec.Store.Orders.Application.v1.Commands.CreateOrder;
+using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
 using Fatec.Store.Orders.Domain.v1.Interfaces;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
