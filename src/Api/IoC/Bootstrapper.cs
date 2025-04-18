@@ -8,7 +8,6 @@ using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -17,45 +16,66 @@ namespace Fatec.Store.Orders.Api.IoC
 {
     public static class Bootstrapper
     {
-        public static void InjectDependencies(this IServiceCollection services, WebApplicationBuilder builder)
-        {
-            var appSettingsConfigurations = services.AddConfigurations(builder);
+        public static void InjectDependencies(this IServiceCollection services, WebApplicationBuilder builder) =>
+                                services.AddConfigurations(builder)
+                                        .InjectContext(builder.Configuration)
+                                        .InjectRepositories()
+                                        .InjectServices()
+                                        .InjectMediator()
+                                        .InjectAutoMapper()
+                                        .InjectAuthenticationSwagger()
+                                        .AddHttpContextAccessor()
+                                        .ConfigureAuthentication(builder.Configuration);
 
-            services.InjectContext(appSettingsConfigurations);
-            services.InjectAuthenticationSwagger();
-            services.InjectRepositories();
-            services.InjectServices();
-            services.InjectMediator();
-            services.InjectAutoMapper();
-            services.AddHttpContextAccessor();
-            services.ConfigureAuthentication(appSettingsConfigurations);
+        public static IServiceCollection AddConfigurations(this IServiceCollection services, WebApplicationBuilder builder)
+        {
+            services.Configure<AppsettingsConfigurations>(builder.Configuration.GetSection(nameof(AppsettingsConfigurations)));
+
+            return services;
         }
 
-        private static void InjectAutoMapper(this IServiceCollection services)
+        private static IServiceCollection InjectContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAutoMapper(opt => opt.AddMaps(typeof(CreateOrderCommandProfile).Assembly));
+            var connectionString = configuration.GetAppSettings().Database;
+            services.AddDbContext<OrdersDbContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddDbContext<OrdersDbContext>(options => options.UseSqlServer(connectionString));
+
+            return services;
         }
 
-        private static void InjectMediator(this IServiceCollection services) =>
-            services.AddMediatR(new MediatRServiceConfiguration().RegisterServicesFromAssemblyContaining(typeof(CreateOrderCommand)));
-
-        private static void InjectServices(this IServiceCollection services)
-        {
-            services.AddSingleton<IViaCepService, ViaCepService>();
-            services.AddSingleton<HttpClient>();
-        }
-
-        private static void InjectRepositories(this IServiceCollection services)
+        private static IServiceCollection InjectRepositories(this IServiceCollection services)
         {
             services.AddTransient<IOrdersRepository, OrdersRepository>();
+
+            return services;
         }
 
-        private static void InjectContext(this IServiceCollection services, AppsettingsConfigurations appSettingsConfigurations) =>
-            services.AddDbContext<OrdersDbContext>(options => options.UseSqlServer(appSettingsConfigurations!.Database));
-
-        //TODO: passar para framework
-        private static void ConfigureAuthentication(this IServiceCollection services, AppsettingsConfigurations appSettingsConfigurations)
+        private static IServiceCollection InjectServices(this IServiceCollection services)
         {
+            services.AddHttpClient<IViaCepService, ViaCepService>();
+
+            return services;
+        }
+
+        private static IServiceCollection InjectMediator(this IServiceCollection services)
+        {
+            services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining(typeof(CreateOrderCommand)));
+
+            return services;
+        }
+
+        private static IServiceCollection InjectAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(cfg => cfg.AddMaps(typeof(CreateOrderCommandProfile).Assembly));
+
+            return services;
+        }
+
+        private static IServiceCollection ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtConfig = configuration.GetAppSettings().JwtConfiguration!;
+
             services.AddAuthentication(authOptions =>
             {
                 authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -66,26 +86,36 @@ namespace Fatec.Store.Orders.Api.IoC
                 jwtOptions.SaveToken = false;
                 jwtOptions.TokenValidationParameters = new TokenValidationParameters
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettingsConfigurations.JwtConfiguration!.SecretJwtKey)),
-                    ValidIssuer = appSettingsConfigurations.JwtConfiguration.Issuer,
-                    ValidAudience = appSettingsConfigurations.JwtConfiguration.Audience,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfig.SecretJwtKey)),
+                    ValidIssuer = jwtConfig.Issuer,
+                    ValidAudience = jwtConfig.Audience,
                     ValidateIssuer = true,
-                    ValidateAudience = true
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
 
             services.AddAuthorizationBuilder()
-              .AddPolicy(nameof(AccessPoliciesEnum.Write),
-                policy => policy.RequireRole(appSettingsConfigurations.JwtConfiguration!.WriteRoles))
-             .AddPolicy(nameof(AccessPoliciesEnum.Read),
-                policy => policy.RequireRole(appSettingsConfigurations.JwtConfiguration!.ReadRoles));
+                .AddPolicy(nameof(AccessPoliciesEnum.Write),
+                    policy => policy.RequireRole(jwtConfig.WriteRoles))
+                .AddPolicy(nameof(AccessPoliciesEnum.Read),
+                    policy => policy.RequireRole(jwtConfig.ReadRoles));
+
+            return services;
         }
 
-        public static void InjectAuthenticationSwagger(this IServiceCollection services)
+        private static IServiceCollection InjectAuthenticationSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fatec.Store.Orders.Api", Version = "v1", Description = "Api responsável por gerenciar as vendas" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Fatec.Store.Orders.Api",
+                    Version = "v1",
+                    Description = "Api responsável por gerenciar as vendas"
+                });
 
                 c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {
@@ -101,7 +131,7 @@ namespace Fatec.Store.Orders.Api.IoC
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                 {
+                {
                     {
                         new OpenApiSecurityScheme
                         {
@@ -113,16 +143,13 @@ namespace Fatec.Store.Orders.Api.IoC
                         },
                         Array.Empty<string>()
                     }
-                 });
+                });
             });
+
+            return services;
         }
 
-        public static AppsettingsConfigurations? AddConfigurations(this IServiceCollection services, WebApplicationBuilder builder)
-        {
-            services.Configure<AppsettingsConfigurations>(builder.Configuration.GetSection(nameof(AppsettingsConfigurations)));
-            services.AddTransient(sp => sp.GetRequiredService<IOptions<AppsettingsConfigurations>>().Value);
-
-            return services?.BuildServiceProvider()?.GetRequiredService<AppsettingsConfigurations>();
-        }
+        private static AppsettingsConfigurations GetAppSettings(this IConfiguration configuration) =>
+            configuration.GetSection(nameof(AppsettingsConfigurations)).Get<AppsettingsConfigurations>()!;
     }
 }

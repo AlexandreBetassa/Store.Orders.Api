@@ -5,8 +5,7 @@ using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
 
 namespace Fatec.Store.Orders.Infrastructure.Data.v1.Repositories
 {
-    public class OrdersRepository(OrdersDbContext context)
-        : BaseRepository<Order>(context), IOrdersRepository
+    public class OrdersRepository(OrdersDbContext context) : BaseRepository<Order>(context), IOrdersRepository
     {
     }
 }
