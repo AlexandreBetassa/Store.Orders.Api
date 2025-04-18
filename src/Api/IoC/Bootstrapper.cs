@@ -1,5 +1,7 @@
 ﻿using Fatec.Store.Framework.Core.Enums;
 using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
+using Fatec.Store.Orders.Application.v1.Interfaces;
+using Fatec.Store.Orders.Application.v1.Services;
 using Fatec.Store.Orders.Domain.v1.Interfaces;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
@@ -22,6 +24,7 @@ namespace Fatec.Store.Orders.Api.IoC
             services.InjectContext(appSettingsConfigurations);
             services.InjectAuthenticationSwagger();
             services.InjectRepositories();
+            services.InjectServices();
             services.InjectMediator();
             services.InjectAutoMapper();
             services.AddHttpContextAccessor();
@@ -35,6 +38,12 @@ namespace Fatec.Store.Orders.Api.IoC
 
         private static void InjectMediator(this IServiceCollection services) =>
             services.AddMediatR(new MediatRServiceConfiguration().RegisterServicesFromAssemblyContaining(typeof(CreateOrderCommand)));
+
+        private static void InjectServices(this IServiceCollection services)
+        {
+            services.AddSingleton<IViaCepService, ViaCepService>();
+            services.AddSingleton<HttpClient>();
+        }
 
         private static void InjectRepositories(this IServiceCollection services)
         {

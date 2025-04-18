@@ -1,5 +1,5 @@
 using Fatec.Store.Orders.Api.IoC;
-using Fatec.Store.Orders.Application.v1.Services;
+using Fatec.Store.Orders.Infrastructure.Data.v1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ builder.Services.InjectDependencies(builder);
 
 var app = builder.Build();
 
-DatabaseManagementService.MigrationInitialisation(app);
+//DatabaseManagementService.MigrationInitialisation(app);
 
 app.UseSwagger();
 app.UseSwaggerUI();
