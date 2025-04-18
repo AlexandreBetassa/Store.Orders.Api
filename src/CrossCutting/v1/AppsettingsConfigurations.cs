@@ -7,5 +7,7 @@ namespace Fatec.Store.Orders.Infrastructure.CrossCutting.v1
         public JwtConfiguration JwtConfiguration { get; set; }
 
         public string Database { get; set; }
+
+        public ServiceClient ServiceClients { get; set; }
     }
 }
