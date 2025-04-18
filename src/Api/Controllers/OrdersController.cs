@@ -1,5 +1,6 @@
 ﻿using Fatec.Store.Framework.Core.Bases.v1.Controllers;
 using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
+using Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -14,5 +15,10 @@ namespace Fatec.Store.Orders.Api.Controllers
         //[Authorize(Policy = nameof(AccessPoliciesEnum.Write))]
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderCommand request) =>
             await ExecuteAsync(() => Mediator.Send(request), HttpStatusCode.OK);
+
+        [HttpGet("{orderId}")]
+        //[Authorize(Policy = nameof(AccessPoliciesEnum.Write))]
+        public async Task<IActionResult> CreateOrderAsync([FromRoute] string orderId) =>
+            await ExecuteAsync(() => Mediator.Send(new GetOrdersByIdQuery(orderId)), HttpStatusCode.OK);
     }
 }
