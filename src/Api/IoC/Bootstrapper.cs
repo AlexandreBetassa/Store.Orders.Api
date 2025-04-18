@@ -32,6 +32,8 @@ namespace Fatec.Store.Orders.Api.IoC
         private static IServiceCollection InjectRepositories(this IServiceCollection services)
         {
             services.AddTransient<IOrdersRepository, OrdersRepository>();
+            services.AddTransient<IDeliveryAddressRepository, DeliveryAddressRepository>();
+            services.AddTransient<IContactRepository, ContactRepository>();
 
             return services;
         }
