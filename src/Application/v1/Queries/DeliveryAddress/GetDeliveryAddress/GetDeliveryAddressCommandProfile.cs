@@ -12,6 +12,7 @@ namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetDeliveryA
                 .ForMember(dest => dest.Province, opt => opt.MapFrom(src => src.Uf))
                 .ForMember(dest => dest.Neighborhood, opt => opt.MapFrom(src => src.Bairro))
                 .ForMember(dest => dest.Complement, opt => opt.MapFrom(src => src.Complemento))
+                .ForMember(dest => dest.Street, opt => opt.MapFrom(src => src.Logradouro))
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Localidade));
         }
     }
