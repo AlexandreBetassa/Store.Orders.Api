@@ -8,7 +8,11 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Repositories
 {
     public class DeliveryAddressRepository(OrdersDbContext context) : BaseRepository<DeliveryAddress>(context), IDeliveryAddressRepository
     {
-        public async Task<DeliveryAddress?> GetAddressByZipCodeAsync(string zipCode) =>
-             await Context.Set<DeliveryAddress>().AsNoTracking().FirstOrDefaultAsync(x => x.ZipCode.Equals(zipCode));
+        public async Task<DeliveryAddress?> GetAddressByZipCodeAndNumberAsync(string zipCode, string number) =>
+             await Context.Set<DeliveryAddress>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x =>
+                x.ZipCode.Equals(zipCode) &&
+                x.Number.Equals(number));
     }
 }

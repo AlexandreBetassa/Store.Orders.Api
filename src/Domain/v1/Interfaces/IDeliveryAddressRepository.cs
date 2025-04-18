@@ -5,6 +5,6 @@ namespace Fatec.Store.Orders.Domain.v1.Interfaces
 {
     public interface IDeliveryAddressRepository: IRepository<DeliveryAddress>
     {
-        public Task<DeliveryAddress> GetAddressByZipCodeAsync(string zipCode);
+        public Task<DeliveryAddress> GetAddressByZipCodeAndNumberAsync(string zipCode, string number);
     }
 }
