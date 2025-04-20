@@ -33,7 +33,6 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
             {
                 var order = Mapper.Map<Order>(request);
 
-                order.CalculateTotalDiscount();
                 order.CalculateTotalAmount();
 
                 await TryAssignAddressAsync(

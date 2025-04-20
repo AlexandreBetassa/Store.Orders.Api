@@ -11,8 +11,6 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
 
         public FormOfPaymentTypeEnum FormOfPaymentType { get; set; }
 
-        public decimal TotalDiscount { get; set; }
-
         public decimal TotalAmount { get; set; }
     }
 }

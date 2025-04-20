@@ -6,8 +6,6 @@ namespace Fatec.Store.Orders.Application.v1.Models.Orders
     {
         public FormOfPaymentTypeEnum FormOfPaymentType { get; set; }
 
-        public decimal TotalDiscount { get; set; }
-
         public decimal TotalAmount { get; set; }
     }
 }

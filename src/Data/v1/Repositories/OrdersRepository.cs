@@ -16,7 +16,7 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Repositories
                 .Include(order => order.Products)
                 .Include(order => order.Address)
                 .Include(order => order.Contact)
-                .Where(order => order.CustomerId.Equals(customerId))
+                .Where(order => order.UserId.Equals(customerId))
                 .ToListAsync();
         }
     }
