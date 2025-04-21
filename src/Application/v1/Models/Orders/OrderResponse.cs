@@ -2,7 +2,7 @@
 {
     public abstract class OrderResponse
     {
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
 
         public decimal TotalAmount { get; set; }
 
