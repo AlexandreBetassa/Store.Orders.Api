@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CrossCutting\Fatec.Store.Orders.Infrastructure.CrossCutting.csproj" />
     <ProjectReference Include="..\Data\Fatec.Store.Orders.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Domain\Fatec.Store.Orders.Domain.csproj" />
   </ItemGroup>
 
 </Project>

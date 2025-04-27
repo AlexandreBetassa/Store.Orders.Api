@@ -2,7 +2,11 @@
 using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
 using Fatec.Store.Orders.Application.v1.Interfaces;
 using Fatec.Store.Orders.Application.v1.Services;
-using Fatec.Store.Orders.Domain.v1.Interfaces;
+using Fatec.Store.Orders.Domain.v1.DomainServices;
+using Fatec.Store.Orders.Domain.v1.Interfaces.Repositories;
+using Fatec.Store.Orders.Domain.v1.Interfaces.ServiceClients;
+using Fatec.Store.Orders.Domain.v1.Interfaces.Services;
+using Fatec.Store.Orders.Domain.v1.Services;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +19,7 @@ namespace Fatec.Store.Orders.Api.IoC
                                 services.AddConfigurations(builder)
                                         .InjectContext(builder.Configuration)
                                         .InjectRepositories()
+                                        .InjectServicesClients()
                                         .InjectServices()
                                         .InjectMediator()
                                         .InjectAutoMapper()
@@ -40,7 +45,16 @@ namespace Fatec.Store.Orders.Api.IoC
 
         private static IServiceCollection InjectServices(this IServiceCollection services)
         {
-            services.AddHttpClient<IViaCepService, ViaCepService>();
+            services.AddScoped<IPaymentDomainService, PaymentDomainService>();
+
+            return services;
+        }
+
+        private static IServiceCollection InjectServicesClients(this IServiceCollection services)
+        {
+            services.AddHttpClient<IViaCepServiceClient, ViaCepServiceClient>();
+            services.AddHttpClient<ICouponServiceClient, CouponServiceClient>();
+            services.AddHttpClient<IPaymentServiceClient, PaymentServiceClient>();
 
             return services;
         }

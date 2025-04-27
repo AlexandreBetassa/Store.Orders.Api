@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace Fatec.Store.Orders.Application.v1.Services
 {
-    public class ViaCepService(HttpClient httpClient, IOptions<AppsettingsConfigurations> options) : IViaCepService
+    public class ViaCepServiceClient(HttpClient httpClient, IOptions<AppsettingsConfigurations> options) : IViaCepServiceClient
     {
         private readonly HttpClient _httpClient = httpClient;
 

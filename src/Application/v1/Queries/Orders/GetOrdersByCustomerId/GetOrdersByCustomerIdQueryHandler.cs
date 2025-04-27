@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Fatec.Store.Framework.Core.Bases.v1.CommandHandler;
 using Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersById;
-using Fatec.Store.Orders.Domain.v1.Interfaces;
+using Fatec.Store.Orders.Domain.v1.Interfaces.Repositories;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

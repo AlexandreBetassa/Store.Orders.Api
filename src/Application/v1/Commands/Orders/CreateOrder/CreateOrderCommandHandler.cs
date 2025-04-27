@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Fatec.Store.Framework.Core.Bases.v1.CommandHandler;
+using Fatec.Store.Orders.Application.v1.Interfaces;
 using Fatec.Store.Orders.Domain.v1.Entities;
-using Fatec.Store.Orders.Domain.v1.Interfaces;
+using Fatec.Store.Orders.Domain.v1.Interfaces.Repositories;
+using Fatec.Store.Orders.Domain.v1.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -13,18 +15,25 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
         private readonly IDeliveryAddressRepository _addressRepository;
         private readonly IContactRepository _contactRepository;
 
+        private readonly IPaymentDomainService _paymentService;
+        private readonly IPaymentServiceClient _paymentServiceClient;
+
         public CreateOrderCommandHandler(
             ILoggerFactory loggerFactory,
             IMapper mapper,
             IHttpContextAccessor httpContext,
             IOrdersRepository ordersRepository,
             IDeliveryAddressRepository addressRepository,
-            IContactRepository contactRepository)
+            IContactRepository contactRepository,
+            IPaymentDomainService paymentService,
+            IPaymentServiceClient paymentServiceClient)
             : base(loggerFactory.CreateLogger<CreateOrderCommandHandler>(), mapper, httpContext)
         {
             _ordersRepository = ordersRepository;
             _addressRepository = addressRepository;
             _contactRepository = contactRepository;
+            _paymentService = paymentService;
+            _paymentServiceClient = paymentServiceClient;
         }
 
         public override async Task<CreateOrderCommandResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -34,6 +43,7 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
                 var order = Mapper.Map<Order>(request);
 
                 order.CalculateTotalAmount();
+                await CalculateDiscount(order, request.GetCouponCodeDiscount());
 
                 await TryAssignAddressAsync(
                     zipCode: request.Address.ZipCode,
@@ -45,6 +55,8 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
                     email: request.Contact.Email,
                     order: order);
 
+                await ProcessPayment(order.Payment);
+
                 var orderId = await _ordersRepository.CreateAsync(order);
 
                 return new CreateOrderCommandResponse { OrderId = orderId };
@@ -55,6 +67,25 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 
                 throw;
             }
+        }
+
+        private async Task ProcessPayment(Payment payment)
+        {
+            var registerPaymentResponse = await _paymentServiceClient.RegisterPaymentAsync(new()
+            {
+                PaymentType = payment.FormOfPaymentType.ToString(),
+                Value = payment.TotalOriginalAmount - payment.TotalDiscount
+            });
+
+            payment.RegisterPaymentId = registerPaymentResponse.PaymentId.ToString();
+        }
+
+        private async Task CalculateDiscount(Order order, string discountCouponCode)
+        {
+            if (!string.IsNullOrEmpty(discountCouponCode))
+                order.Payment.TotalDiscount = await _paymentService.CalculateDiscountAsync(
+                                                                        originalAmount: order.GetTotalOriginalAmount(),
+                                                                        couponCode: discountCouponCode);
         }
 
         private async Task TryAssignAddressAsync(string zipCode, string number, Order order)

@@ -9,12 +9,14 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 
         public DeliveryAddressCommand Address { get; set; }
 
-        public IEnumerable<FormOfPaymentCommand> FormOfPayments { get; set; }
+        public PaymentCommand Payment { get; set; }
 
         public ContactCommand Contact { get; set; }
 
         public IEnumerable<ProductCommand> Products { get; set; }
 
         public DateTime OrderDate { get; set; }
+
+        public string GetCouponCodeDiscount() => Payment?.DiscountCouponCode ?? string.Empty;
     }
 }

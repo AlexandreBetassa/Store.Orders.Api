@@ -6,7 +6,7 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
     {
         public int UserId { get; set; }
 
-        public decimal TotalAmount { get; set; }
+        public Payment Payment { get; set; }
 
         public DateTime OrderDate { get; set; }
 
@@ -14,14 +14,14 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
 
         public DeliveryAddress Address { get; set; }
 
-        public IEnumerable<FormOfPayment> FormOfPayments { get; set; }
-
         public int ContactId { get; set; }
 
         public Contact Contact { get; set; }
 
         public IEnumerable<Product> Products { get; set; }
 
-        public void CalculateTotalAmount() => TotalAmount = Products.Sum(p => p.Price * p.Quantity);
+        public void CalculateTotalAmount() => Payment.TotalOriginalAmount = Products.Sum(p => p.Price * p.Quantity);
+
+        public decimal GetTotalOriginalAmount() => Payment.TotalOriginalAmount;
     }
 }
