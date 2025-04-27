@@ -29,7 +29,10 @@ namespace Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersByCustomerId
                 var orderData = await _ordersRepository.GetOrdersByCustomerIdAsync(customerId: request.CustomerId)
                     ?? throw new NotFoundException(message: "Pedido não localizado !!!");
 
-                return Mapper.Map<IEnumerable<GetOrdersByCustomerIdQueryResponse>>(orderData);
+                var orderResponse = Mapper.Map<IEnumerable<GetOrdersByCustomerIdQueryResponse>>(orderData);
+                orderResponse.ToList().ForEach(order => order.CalculatePaymentsAmount());
+
+                return orderResponse;
             }
             catch (Exception ex)
             {

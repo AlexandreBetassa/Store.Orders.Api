@@ -4,16 +4,20 @@
     {
         public int UserId { get; set; }
 
-        public decimal TotalAmount { get; set; }
-
         public DateTime OrderDate { get; set; }
 
         public DeliveryAddressResponse Address { get; set; }
 
-        public IEnumerable<FormOfPaymentResponse> FormOfPayments { get; set; }
+        public PaymentResponse Payment { get; set; }
 
         public ContactResponse Contact { get; set; }
 
         public IEnumerable<ProductResponse> Products { get; set; }
+
+        public void CalculatePaymentsAmount()
+        {
+            Payment.TotalOriginalAmount = Products.Sum(p => p.Price * p.Quantity);
+            Payment.TotalPaymentAmount = Payment.TotalOriginalAmount - Payment.TotalDiscount;
+        }
     }
 }

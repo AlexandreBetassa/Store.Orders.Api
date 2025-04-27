@@ -8,15 +8,15 @@ namespace Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersById
     {
         public GetOrdersByIdQueryProfile()
         {
-            CreateMap<Order, GetOrdersByIdQueryResponse>();
+            CreateMap<Order, GetOrdersByIdQueryResponse>(MemberList.None);
 
-            CreateMap<Domain.v1.Entities.DeliveryAddress, DeliveryAddressResponse>();
+            CreateMap<Domain.v1.Entities.DeliveryAddress, DeliveryAddressResponse>(MemberList.None);
 
-            CreateMap<Contact, ContactResponse>();
+            CreateMap<Contact, ContactResponse>(MemberList.None);
 
-            CreateMap<Payment, FormOfPaymentResponse>(MemberList.None);
+            CreateMap<Payment, PaymentResponse>(MemberList.None);
 
-            CreateMap<Product, ProductResponse>();
+            CreateMap<Product, ProductResponse>(MemberList.None);
         }
     }
 }
