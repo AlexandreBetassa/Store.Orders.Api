@@ -28,6 +28,7 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.PatchOrder
                 var order = await _ordersRepository.GetByIdAsync(request.OrderId);
 
                 if (order is null) throw new NotFoundException(message: "Pedido não encontrado !!!");
+                if (!order.Status) throw new BadRequestException(message: "Pedido já cancelado !!!");
 
                 await _ordersRepository.PatchAsync(order.Id, order => order.SetProperty(x => x.Status, false));
 
