@@ -4,11 +4,9 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
 {
     public class Order : BaseEntity
     {
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
 
-        public decimal TotalAmount { get; set; }
-
-        public decimal TotalDiscount { get; set; }
+        public Payment Payment { get; set; }
 
         public DateTime OrderDate { get; set; }
 
@@ -16,16 +14,14 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
 
         public DeliveryAddress Address { get; set; }
 
-        public IEnumerable<FormOfPayment> FormOfPayments { get; set; }
-
         public int ContactId { get; set; }
 
         public Contact Contact { get; set; }
 
         public IEnumerable<Product> Products { get; set; }
 
-        public void CalculateTotalDiscount() => TotalDiscount = FormOfPayments.Sum(p => p.TotalDiscount);
+        public void CalculateTotalAmount() => Payment.TotalOriginalAmount = Products.Sum(p => p.Price * p.Quantity);
 
-        public void CalculateTotalAmount() => TotalAmount = Products.Sum(p => p.Amount * p.Quantity) - TotalDiscount;
+        public decimal GetTotalOriginalAmount() => Payment.TotalOriginalAmount;
     }
 }

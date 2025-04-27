@@ -10,13 +10,13 @@ namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetDeliveryA
 {
     public class GetDeliveryAddressCommandHandler : BaseCommandHandler<GetDeliveryAddressCommand, GetDeliveryAddressCommandResponse>
     {
-        private readonly IViaCepService _viaCepService;
+        private readonly IViaCepServiceClient _viaCepService;
 
         public GetDeliveryAddressCommandHandler(
             ILoggerFactory loggerFactory,
             IMapper mapper,
             IHttpContextAccessor httpContext,
-            IViaCepService viaCepService)
+            IViaCepServiceClient viaCepService)
             : base(loggerFactory.CreateLogger<GetDeliveryAddressCommandHandler>(), mapper, httpContext)
         {
             _viaCepService = viaCepService;

@@ -30,12 +30,7 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Context
                 .WithMany(o => o.Products)
                 .HasForeignKey(po => po.OrderId);
 
-            modelBuilder.Entity<FormOfPayment>()
-                .HasOne(po => po.Order)
-                .WithMany(o => o.FormOfPayments)
-                .HasForeignKey(po => po.OrderId);
-
-            modelBuilder.Entity<FormOfPayment>()
+            modelBuilder.Entity<Payment>()
                 .Ignore(x => x.Status);
 
             modelBuilder.Entity<Product>()

@@ -2,7 +2,7 @@
 
 namespace Fatec.Store.Orders.Application.v1.Interfaces
 {
-    public interface IViaCepService
+    public interface IViaCepServiceClient
     {
         Task<ViaCepResponse> GetAddressByZipCode(string zipCode);
     }

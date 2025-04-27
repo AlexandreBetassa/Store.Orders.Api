@@ -1,6 +1,6 @@
 ﻿using Fatec.Store.Framework.Core.Bases.v1.Repository;
 using Fatec.Store.Orders.Domain.v1.Entities;
-using Fatec.Store.Orders.Domain.v1.Interfaces;
+using Fatec.Store.Orders.Domain.v1.Interfaces.Repositories;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +12,11 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Repositories
         {
             return await Context.Set<Order>()
                 .AsNoTracking()
-                .Include(order => order.FormOfPayments)
+                .Include(order => order.Payment)
                 .Include(order => order.Products)
                 .Include(order => order.Address)
                 .Include(order => order.Contact)
-                .Where(order => order.CustomerId.Equals(customerId))
+                .Where(order => order.UserId.Equals(customerId))
                 .ToListAsync();
         }
     }

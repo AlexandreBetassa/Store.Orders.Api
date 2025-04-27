@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Fatec.Store.Framework.Core.Bases.v1.CommandHandler;
-using Fatec.Store.Orders.Domain.v1.Interfaces;
+using Fatec.Store.Orders.Domain.v1.Interfaces.Repositories;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -28,7 +28,10 @@ namespace Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersById
                 var orderData = await _ordersRepository.GetByIdAsync(id: request.OrderId)
                     ?? throw new NotFoundException(message: "Pedido não localizado !!!");
 
-                return Mapper.Map<GetOrdersByIdQueryResponse>(orderData);
+                var orderResponse = Mapper.Map<GetOrdersByIdQueryResponse>(orderData);
+                orderResponse.CalculatePaymentsAmount();
+
+                return orderResponse;
             }
             catch (Exception ex)
             {

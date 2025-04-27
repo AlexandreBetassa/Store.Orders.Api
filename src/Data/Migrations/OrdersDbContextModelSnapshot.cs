@@ -102,20 +102,17 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalDiscount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -123,7 +120,39 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
 
                     b.HasIndex("ContactId");
 
+                    b.HasIndex("PaymentId");
+
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DiscountCouponCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FormOfPaymentType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RegisterPaymentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalOriginalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Entities.Product", b =>
@@ -134,11 +163,11 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -151,33 +180,6 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("ProductOrders");
-                });
-
-            modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Models.FormOfPayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FormOfPaymentType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalDiscount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("FormOfPayment");
                 });
 
             modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Entities.Order", b =>
@@ -194,26 +196,23 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Fatec.Store.Orders.Domain.v1.Entities.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Address");
 
                     b.Navigation("Contact");
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Entities.Product", b =>
                 {
                     b.HasOne("Fatec.Store.Orders.Domain.v1.Entities.Order", "Order")
                         .WithMany("Products")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Models.FormOfPayment", b =>
-                {
-                    b.HasOne("Fatec.Store.Orders.Domain.v1.Entities.Order", "Order")
-                        .WithMany("FormOfPayments")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -233,8 +232,6 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Entities.Order", b =>
                 {
-                    b.Navigation("FormOfPayments");
-
                     b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
