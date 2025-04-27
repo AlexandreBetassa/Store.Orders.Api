@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.GetCoupon
+namespace Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.Coupons.GetCoupon
 {
     public class GetByCouponCodeResponse
     {

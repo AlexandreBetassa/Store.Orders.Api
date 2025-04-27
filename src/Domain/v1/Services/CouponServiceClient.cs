@@ -1,6 +1,6 @@
 ﻿using Fatec.Store.Orders.Domain.v1.Interfaces.ServiceClients;
-using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.DebitCouponCode;
-using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.GetCoupon;
+using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.Coupons.DebitCouponCode;
+using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.Coupons.GetCoupon;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;

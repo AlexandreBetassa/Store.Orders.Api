@@ -55,6 +55,7 @@ namespace Fatec.Store.Orders.Api.IoC
             services.AddHttpClient<IViaCepServiceClient, ViaCepServiceClient>();
             services.AddHttpClient<ICouponServiceClient, CouponServiceClient>();
             services.AddHttpClient<IPaymentServiceClient, PaymentServiceClient>();
+            services.AddHttpClient<IProductServiceClient, ProductServiceClient>();
 
             return services;
         }

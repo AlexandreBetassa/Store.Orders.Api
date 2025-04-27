@@ -1,4 +1,4 @@
-﻿namespace Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.DebitCouponCode
+﻿namespace Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.Coupons.DebitCouponCode
 {
     public class DebitCouponCodeRequest
     {

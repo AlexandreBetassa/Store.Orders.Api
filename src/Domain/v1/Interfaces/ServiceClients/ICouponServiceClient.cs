@@ -1,5 +1,5 @@
-﻿using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.DebitCouponCode;
-using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.GetCoupon;
+﻿using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.Coupons.DebitCouponCode;
+using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.Coupons.GetCoupon;
 
 namespace Fatec.Store.Orders.Domain.v1.Interfaces.ServiceClients
 {
