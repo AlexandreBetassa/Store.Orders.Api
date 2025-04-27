@@ -4,6 +4,8 @@
     {
         public int UserId { get; set; }
 
+        public bool Status { get; set; }
+
         public DateTime OrderDate { get; set; }
 
         public DeliveryAddressResponse Address { get; set; }

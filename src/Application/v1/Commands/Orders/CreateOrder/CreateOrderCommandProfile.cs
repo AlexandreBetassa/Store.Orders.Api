@@ -8,7 +8,8 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
     {
         public CreateOrderCommandProfile()
         {
-            CreateMap<CreateOrderCommand, Order>(MemberList.None);
+            CreateMap<CreateOrderCommand, Order>(MemberList.None)
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => true));
 
             CreateMap<DeliveryAddressCommand, DeliveryAddress>(MemberList.None);
 
