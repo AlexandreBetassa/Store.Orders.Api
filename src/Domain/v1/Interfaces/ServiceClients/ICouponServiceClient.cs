@@ -1,4 +1,5 @@
-﻿using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.GetCoupon;
+﻿using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.DebitCouponCode;
+using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.GetCoupon;
 
 namespace Fatec.Store.Orders.Domain.v1.Interfaces.ServiceClients
 {
@@ -6,6 +7,6 @@ namespace Fatec.Store.Orders.Domain.v1.Interfaces.ServiceClients
     {
         Task<GetByCouponCodeResponse> GetCouponByCouponCodeAsync(string couponCode);
 
-        Task DebitQuantityCouponCodeAsync(string couponCode, string userId);
+        Task DebitCouponCodeAsync(DebitCouponCodeRequest debitCouponCodeRequest);
     }
 }

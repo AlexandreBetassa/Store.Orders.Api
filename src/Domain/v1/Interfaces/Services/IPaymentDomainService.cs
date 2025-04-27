@@ -4,6 +4,6 @@
     {
         Task<decimal> CalculateDiscountAsync(decimal originalAmount, string couponCode);
 
-        Task DebitQuantityCouponCodeAsync(string couponCode, string userId);
+        Task DebitCouponCodeAsync(string couponCode, int userId);
     }
 }

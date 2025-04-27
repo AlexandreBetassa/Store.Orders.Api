@@ -57,6 +57,10 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 
                 await ProcessPayment(order.Payment);
 
+                await _paymentService.DebitCouponCodeAsync(
+                    couponCode: request.GetCouponCodeDiscount(),
+                    userId: request.UserId);
+
                 var orderId = await _ordersRepository.CreateAsync(order);
 
                 return new CreateOrderCommandResponse { OrderId = orderId };

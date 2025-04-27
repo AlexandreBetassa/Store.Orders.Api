@@ -1,9 +1,12 @@
 ﻿using Fatec.Store.Orders.Domain.v1.Interfaces.ServiceClients;
+using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.DebitCouponCode;
 using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.GetCoupon;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
+using System.Text;
 
 namespace Fatec.Store.Orders.Domain.v1.Services
 {
@@ -13,9 +16,14 @@ namespace Fatec.Store.Orders.Domain.v1.Services
 
         private readonly string _couponCepUrl = options.Value.ServiceClients.Coupon;
 
-        public Task DebitQuantityCouponCodeAsync(string couponCode, string userId)
+        public async Task DebitCouponCodeAsync(DebitCouponCodeRequest debitCouponCodeRequest)
         {
-            throw new NotImplementedException();
+            var content = new StringContent(
+                JsonConvert.SerializeObject(debitCouponCodeRequest),
+                Encoding.UTF8,
+                "application/json");
+
+            await _httpClient.PatchAsync($"{_couponCepUrl}", content);
         }
 
         public async Task<GetByCouponCodeResponse?> GetCouponByCouponCodeAsync(string couponCode)

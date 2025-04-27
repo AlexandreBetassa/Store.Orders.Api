@@ -17,7 +17,7 @@ namespace Fatec.Store.Orders.Domain.v1.DomainServices
             return decimal.Zero;
         }
 
-        public async Task DebitQuantityCouponCodeAsync(string couponCode, string userId) =>
-            await _couponServiceClient.DebitQuantityCouponCodeAsync(couponCode, userId);
+        public async Task DebitCouponCodeAsync(string couponCode, int userId) =>
+            await _couponServiceClient.DebitCouponCodeAsync(new() { CouponCode = couponCode, UserId = userId });
     }
 }
