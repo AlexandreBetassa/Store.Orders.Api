@@ -4,6 +4,8 @@ namespace Fatec.Store.Orders.Application.v1.Models.Orders
 {
     public class PaymentResponse
     {
+        public string RegisterPaymentId { get; set; }
+
         public FormOfPaymentTypeEnum FormOfPaymentType { get; set; }
 
         public decimal TotalPaymentAmount { get; set; }
