@@ -9,8 +9,15 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Services
     {
         public static void MigrationInitialisation(IApplicationBuilder app)
         {
-            using var serviceScope = app.ApplicationServices.CreateScope();
-            serviceScope?.ServiceProvider?.GetService<OrdersDbContext>()?.Database?.Migrate();
+            try
+            {
+                using var serviceScope = app.ApplicationServices.CreateScope();
+                serviceScope?.ServiceProvider?.GetService<OrdersDbContext>()?.Database?.Migrate();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }

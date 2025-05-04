@@ -29,7 +29,7 @@ namespace Fatec.Store.Orders.Api.IoC
 
         private static IServiceCollection InjectContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<OrdersDbContext>(options => options.UseSqlServer(configuration.GetAppSettings().Database));
+            services.AddDbContext<OrdersDbContext>(options => options.UseMySql(configuration.GetAppSettings().Database, ServerVersion.AutoDetect(configuration.GetAppSettings().Database)));
 
             return services;
         }
