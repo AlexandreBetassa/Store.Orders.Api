@@ -1,4 +1,5 @@
 ﻿using Fatec.Store.Framework.Core.Bases.v1.Controllers;
+using Fatec.Store.Orders.Application.v1.Commands.Payments.CreatePayment;
 using Fatec.Store.Orders.Application.v1.Commands.Payments.GeneratePixPayload;
 using Fatec.Store.Orders.Application.v1.Queries.Payments.GetFormsOfPayment;
 using MediatR;
@@ -16,7 +17,11 @@ namespace Fatec.Store.Orders.Api.Controllers
              await ExecuteAsync(() => Mediator.Send(new GetFormsOfPaymentQuery()), HttpStatusCode.OK);
 
         [HttpPost("pix/payload")]
-        public async Task<IActionResult> GeneratePixPayload([FromBody]GeneratePixPayloadCommand request) =>
+        public async Task<IActionResult> GeneratePixPayload([FromBody] GeneratePixPayloadCommand request) =>
                 await ExecuteAsync(() => Mediator.Send(request), HttpStatusCode.OK);
+
+        [HttpPost]
+        public async Task<IActionResult> RegisterPaymentAsync([FromBody] RegisterPaymentCommand request) =>
+            await ExecuteAsync(() => Mediator.Send(request), HttpStatusCode.OK);
     }
 }

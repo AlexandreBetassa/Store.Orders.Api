@@ -7,10 +7,6 @@ namespace Fatec.Store.Orders.Application.v1.Services
 {
     public class PaymentServiceClient(HttpClient httpClient, IOptions<AppsettingsConfigurations> options) : IPaymentServiceClient
     {
-        private readonly HttpClient _httpClient = httpClient;
-
-        private readonly string _couponCepUrl = string.Empty;
-
         public async Task<RegisterPaymentResponse> RegisterPaymentAsync(RegisterPaymentRequest request)
         {
             return await Task.FromResult(new RegisterPaymentResponse());

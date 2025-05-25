@@ -4,7 +4,7 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
 {
     public class Payment : BaseEntity
     {
-        public string RegisterPaymentId { get; set; }
+        public int RegisterPaymentId { get; set; }
 
         public string DiscountCouponCode { get; set; }
 

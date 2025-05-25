@@ -2,6 +2,6 @@
 {
     public class RegisterPaymentResponse
     {
-        public Guid PaymentId { get; set; } = Guid.NewGuid();
+        public int PaymentId { get; set; } = new Random().Next(99999999);
     }
 }

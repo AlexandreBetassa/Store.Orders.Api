@@ -45,9 +45,8 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
         {
             try
             {
-                request.UserId = int.Parse(_userId);
-
                 var order = Mapper.Map<Order>(request);
+                order.UserId = int.Parse(_userId);
 
                 await ApplyOrderInformationsAsync(order, request);
                 await ApplyOrderUpdatesAsync(order, request);
