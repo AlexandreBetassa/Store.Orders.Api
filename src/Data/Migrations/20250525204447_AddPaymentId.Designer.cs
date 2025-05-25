@@ -4,6 +4,7 @@ using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(OrdersDbContext))]
-    partial class OrdersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250525204447_AddPaymentId")]
+    partial class AddPaymentId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,6 +62,10 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Neighborhood")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -98,20 +105,14 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CouponCode")
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<decimal>("TotalPayment")
-                        .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -123,40 +124,6 @@ namespace Fatec.Store.Orders.Infrastructure.Data.Migrations
                     b.HasIndex("ContactId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Entities.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("DiscountCouponCode")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("FormOfPayment")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("RegisterPaymentId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<decimal>("TotalDiscount")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<decimal>("TotalOriginalAmount")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("Fatec.Store.Orders.Domain.v1.Entities.Product", b =>

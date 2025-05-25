@@ -2,6 +2,7 @@
 using Fatec.Store.Orders.Domain.v1.Models.ServiceCleintes.Products.UpdateProductsStock;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
 using Microsoft.Extensions.Options;
+using System.Text;
 using System.Text.Json;
 
 namespace Fatec.Store.Orders.Domain.v1.Services
@@ -16,12 +17,12 @@ namespace Fatec.Store.Orders.Domain.v1.Services
         {
             var request = JsonSerializer.Serialize(updateProductsStockRequest);
 
-            //var content = new StringContent(
-            //    JsonSerializer.Serialize(updateProductsStockRequest),
-            //    Encoding.UTF8,
-            //    "application/json");
+            var content = new StringContent(
+                JsonSerializer.Serialize(updateProductsStockRequest),
+                Encoding.UTF8,
+                "application/json");
 
-            //await _httpClient.PutAsync($"{_productCepUrl}", content);
+            await _httpClient.PutAsync($"{_productCepUrl}", content);
         }
     }
 }

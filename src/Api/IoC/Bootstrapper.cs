@@ -3,9 +3,9 @@ using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
 using Fatec.Store.Orders.Application.v1.Interfaces;
 using Fatec.Store.Orders.Application.v1.Services;
 using Fatec.Store.Orders.Domain.v1.DomainServices;
+using Fatec.Store.Orders.Domain.v1.Interfaces.DomainServices;
 using Fatec.Store.Orders.Domain.v1.Interfaces.Repositories;
 using Fatec.Store.Orders.Domain.v1.Interfaces.ServiceClients;
-using Fatec.Store.Orders.Domain.v1.Interfaces.Services;
 using Fatec.Store.Orders.Domain.v1.Services;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Repositories;
@@ -20,6 +20,7 @@ namespace Fatec.Store.Orders.Api.IoC
                                         .InjectContext(builder.Configuration)
                                         .InjectRepositories()
                                         .InjectServicesClients()
+                                        .InjectDomainServices()
                                         .InjectServices()
                                         .InjectMediator()
                                         .InjectAutoMapper()
@@ -34,11 +35,19 @@ namespace Fatec.Store.Orders.Api.IoC
             return services;
         }
 
+        private static IServiceCollection InjectDomainServices(this IServiceCollection services)
+        {
+            services.AddScoped<IPaymentDomainService, PaymentDomainService>();
+
+            return services;
+        }
+
         private static IServiceCollection InjectRepositories(this IServiceCollection services)
         {
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             services.AddScoped<IDeliveryAddressRepository, DeliveryAddressRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
 
             return services;
         }

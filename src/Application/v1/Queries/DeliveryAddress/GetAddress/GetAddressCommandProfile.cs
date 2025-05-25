@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Fatec.Store.Orders.Application.v1.Models.ViaCep;
 
-namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetDeliveryAddress
+namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetAddress
 {
-    public class GetDeliveryAddressCommandProfile : Profile
+    public class GetAddressCommandProfile : Profile
     {
-        public GetDeliveryAddressCommandProfile()
+        public GetAddressCommandProfile()
         {
-            CreateMap<ViaCepResponse, GetDeliveryAddressCommandResponse>(MemberList.None)
+            CreateMap<ViaCepResponse, GetAddressCommandResponse>(MemberList.None)
                 .ForMember(dest => dest.ZipCode, opt => opt.MapFrom(src => src.Cep))
                 .ForMember(dest => dest.Province, opt => opt.MapFrom(src => src.Uf))
                 .ForMember(dest => dest.Neighborhood, opt => opt.MapFrom(src => src.Bairro))

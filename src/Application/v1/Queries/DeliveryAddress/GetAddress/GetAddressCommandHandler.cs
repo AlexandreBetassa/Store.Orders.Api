@@ -6,23 +6,23 @@ using Fatec.Store.Orders.Infrastructure.CrossCutting.v1.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetDeliveryAddress
+namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetAddress
 {
-    public class GetDeliveryAddressCommandHandler : BaseCommandHandler<GetDeliveryAddressCommand, GetDeliveryAddressCommandResponse>
+    public class GetAddressCommandHandler : BaseCommandHandler<GetAddressCommand, GetAddressCommandResponse>
     {
         private readonly IViaCepServiceClient _viaCepService;
 
-        public GetDeliveryAddressCommandHandler(
+        public GetAddressCommandHandler(
             ILoggerFactory loggerFactory,
             IMapper mapper,
             IHttpContextAccessor httpContext,
             IViaCepServiceClient viaCepService)
-            : base(loggerFactory.CreateLogger<GetDeliveryAddressCommandHandler>(), mapper, httpContext)
+            : base(loggerFactory.CreateLogger<GetAddressCommandHandler>(), mapper, httpContext)
         {
             _viaCepService = viaCepService;
         }
 
-        public override async Task<GetDeliveryAddressCommandResponse> Handle(GetDeliveryAddressCommand request, CancellationToken cancellationToken)
+        public override async Task<GetAddressCommandResponse> Handle(GetAddressCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetDeliveryA
                 if (viaCepResponseFail)
                     throw new NotFoundException(message: "CEP não localizado !!!");
 
-                return Mapper.Map<GetDeliveryAddressCommandResponse>(viaCepResponse);
+                return Mapper.Map<GetAddressCommandResponse>(viaCepResponse);
             }
             catch (Exception ex)
             {

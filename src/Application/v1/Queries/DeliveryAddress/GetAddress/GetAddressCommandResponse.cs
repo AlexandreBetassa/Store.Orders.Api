@@ -1,6 +1,6 @@
-﻿namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetDeliveryAddress
+﻿namespace Fatec.Store.Orders.Application.v1.Queries.DeliveryAddress.GetAddress
 {
-    public class GetDeliveryAddressCommandResponse
+    public class GetAddressCommandResponse
     {
         public string ZipCode { get; set; }
 
