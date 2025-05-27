@@ -1,4 +1,5 @@
-﻿using Fatec.Store.Orders.Api.IoC.Configurations;
+﻿using Fatec.Store.Framework.Core.Bases.v1.Injections;
+using Fatec.Store.Orders.Api.IoC.Configurations;
 using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
 using Fatec.Store.Orders.Application.v1.Interfaces;
 using Fatec.Store.Orders.Application.v1.Services;
@@ -18,6 +19,7 @@ namespace Fatec.Store.Orders.Api.IoC
         public static void InjectDependencies(this IServiceCollection services, WebApplicationBuilder builder) =>
                                 services.AddConfigurations(builder)
                                         .InjectContext(builder.Configuration)
+                                        .InjectValidators(typeof(CreateOrderCommandValidator).Assembly)
                                         .InjectRepositories()
                                         .InjectServicesClients()
                                         .InjectDomainServices()

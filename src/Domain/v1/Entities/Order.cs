@@ -6,7 +6,7 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
     {
         public int UserId { get; set; }
 
-        public int? PaymentId { get; set; }
+        public int PaymentId { get; set; }
 
         public decimal TotalPayment { get; set; }
 
