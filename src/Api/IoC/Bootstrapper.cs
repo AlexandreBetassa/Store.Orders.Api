@@ -1,11 +1,12 @@
-﻿using Fatec.Store.Orders.Api.IoC.Configurations;
+﻿using Fatec.Store.Framework.Core.Bases.v1.Injections;
+using Fatec.Store.Orders.Api.IoC.Configurations;
 using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
 using Fatec.Store.Orders.Application.v1.Interfaces;
 using Fatec.Store.Orders.Application.v1.Services;
 using Fatec.Store.Orders.Domain.v1.DomainServices;
+using Fatec.Store.Orders.Domain.v1.Interfaces.DomainServices;
 using Fatec.Store.Orders.Domain.v1.Interfaces.Repositories;
 using Fatec.Store.Orders.Domain.v1.Interfaces.ServiceClients;
-using Fatec.Store.Orders.Domain.v1.Interfaces.Services;
 using Fatec.Store.Orders.Domain.v1.Services;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Context;
 using Fatec.Store.Orders.Infrastructure.Data.v1.Repositories;
@@ -18,8 +19,10 @@ namespace Fatec.Store.Orders.Api.IoC
         public static void InjectDependencies(this IServiceCollection services, WebApplicationBuilder builder) =>
                                 services.AddConfigurations(builder)
                                         .InjectContext(builder.Configuration)
+                                        .InjectValidators(typeof(CreateOrderCommandValidator).Assembly)
                                         .InjectRepositories()
                                         .InjectServicesClients()
+                                        .InjectDomainServices()
                                         .InjectServices()
                                         .InjectMediator()
                                         .InjectAutoMapper()
@@ -29,7 +32,14 @@ namespace Fatec.Store.Orders.Api.IoC
 
         private static IServiceCollection InjectContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<OrdersDbContext>(options => options.UseSqlServer(configuration.GetAppSettings().Database));
+            services.AddDbContext<OrdersDbContext>(options => options.UseMySql(configuration.GetAppSettings().Database, ServerVersion.AutoDetect(configuration.GetAppSettings().Database)));
+
+            return services;
+        }
+
+        private static IServiceCollection InjectDomainServices(this IServiceCollection services)
+        {
+            services.AddScoped<IPaymentDomainService, PaymentDomainService>();
 
             return services;
         }
@@ -39,6 +49,7 @@ namespace Fatec.Store.Orders.Api.IoC
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             services.AddScoped<IDeliveryAddressRepository, DeliveryAddressRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
 
             return services;
         }

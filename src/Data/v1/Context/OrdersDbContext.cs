@@ -7,6 +7,8 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Context
     {
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+
         public DbSet<DeliveryAddress> Addresses { get; set; }
 
         public DbSet<Product> ProductOrders { get; set; }
@@ -29,9 +31,6 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Context
                 .HasOne(po => po.Order)
                 .WithMany(o => o.Products)
                 .HasForeignKey(po => po.OrderId);
-
-            modelBuilder.Entity<Payment>()
-                .Ignore(x => x.Status);
 
             modelBuilder.Entity<Product>()
                 .Ignore(x => x.Status);

@@ -14,8 +14,6 @@ namespace Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersByCustomerId
 
             CreateMap<Contact, ContactResponse>(MemberList.None);
 
-            CreateMap<Payment, PaymentResponse>(MemberList.None);
-
             CreateMap<Product, ProductResponse>();
         }
     }

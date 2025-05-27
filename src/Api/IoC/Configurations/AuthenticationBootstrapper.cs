@@ -42,10 +42,8 @@ namespace Fatec.Store.Orders.Api.IoC.Configurations
         private static IServiceCollection ConfigureAuthenticationBuilder(this IServiceCollection services, JwtConfiguration jwtConfig)
         {
             services.AddAuthorizationBuilder()
-                .AddPolicy(nameof(AccessPoliciesEnum.Write),
-                    policy => policy.RequireRole(jwtConfig.WriteRoles))
-                .AddPolicy(nameof(AccessPoliciesEnum.Read),
-                    policy => policy.RequireRole(jwtConfig.ReadRoles));
+                .AddPolicy("User", policy => policy.RequireRole(jwtConfig.WriteRoles))
+                .AddPolicy("User", policy => policy.RequireRole(jwtConfig.ReadRoles));
 
             return services;
         }

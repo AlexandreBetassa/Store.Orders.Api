@@ -12,7 +12,6 @@ namespace Fatec.Store.Orders.Infrastructure.Data.v1.Repositories
         {
             return await Context.Set<Order>()
                 .AsNoTracking()
-                .Include(order => order.Payment)
                 .Include(order => order.Products)
                 .Include(order => order.Address)
                 .Include(order => order.Contact)

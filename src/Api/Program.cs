@@ -1,5 +1,5 @@
 using Fatec.Store.Orders.Api.IoC;
-using Fatec.Store.Orders.Infrastructure.Data.v1.Services;
+using Fatec.Store.Orders.Application.v1.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,12 +9,18 @@ builder.Services.InjectDependencies(builder);
 
 var app = builder.Build();
 
-DatabaseManagementService.MigrationInitialisation(app);
+app.MigrationInitialisation();
 
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader();
+    opt.AllowAnyMethod();
+    opt.AllowAnyOrigin();
+});
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

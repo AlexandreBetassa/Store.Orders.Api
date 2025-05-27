@@ -14,8 +14,6 @@ namespace Fatec.Store.Orders.Domain.v1.Entities
 
         public string Province { get; set; }
 
-        public string Country { get; set; }
-
         public string Complement { get; set; }
 
         public string ZipCode { get; set; }

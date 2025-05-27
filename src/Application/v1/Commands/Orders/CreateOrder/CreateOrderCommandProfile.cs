@@ -13,8 +13,6 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
 
             CreateMap<DeliveryAddressCommand, DeliveryAddress>(MemberList.None);
 
-            CreateMap<PaymentCommand, Payment>(MemberList.None);
-
             CreateMap<ContactCommand, Contact>(MemberList.None);
 
             CreateMap<ProductCommand, Product>(MemberList.None);

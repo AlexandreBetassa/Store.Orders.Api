@@ -30,7 +30,6 @@ namespace Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersByCustomerId
                     ?? throw new NotFoundException(message: "Pedido não localizado !!!");
 
                 var orderResponse = Mapper.Map<IEnumerable<GetOrdersByCustomerIdQueryResponse>>(orderData);
-                orderResponse.ToList().ForEach(order => order.CalculatePaymentsAmount());
 
                 return orderResponse;
             }

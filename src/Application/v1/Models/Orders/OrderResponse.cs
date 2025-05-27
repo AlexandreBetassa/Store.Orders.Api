@@ -2,6 +2,8 @@
 {
     public abstract class OrderResponse
     {
+        public int Id { get; set; }
+
         public int UserId { get; set; }
 
         public bool Status { get; set; }
@@ -10,16 +12,14 @@
 
         public DeliveryAddressResponse Address { get; set; }
 
-        public PaymentResponse Payment { get; set; }
+        public int PaymentId { get; set; }
+
+        public string CouponCode { get; set; }
+
+        public decimal TotalPayment { get; set; }
 
         public ContactResponse Contact { get; set; }
 
         public IEnumerable<ProductResponse> Products { get; set; }
-
-        public void CalculatePaymentsAmount()
-        {
-            Payment.TotalOriginalAmount = Products.Sum(p => p.Price * p.Quantity);
-            Payment.TotalPaymentAmount = Payment.TotalOriginalAmount - Payment.TotalDiscount;
-        }
     }
 }

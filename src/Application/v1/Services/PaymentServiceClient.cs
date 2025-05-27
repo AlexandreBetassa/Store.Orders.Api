@@ -1,19 +1,15 @@
 ﻿using Fatec.Store.Orders.Application.v1.Interfaces;
-using Fatec.Store.Orders.Application.v1.Models.Payment.RegisterPayment;
-using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
-using Microsoft.Extensions.Options;
+using Fatec.Store.Orders.Application.v1.Models.Payment.RegisterPaymentCard;
+using Fatec.Store.Orders.Application.v1.Models.Payment.RegisterPaymentPix;
 
 namespace Fatec.Store.Orders.Application.v1.Services
 {
-    public class PaymentServiceClient(HttpClient httpClient, IOptions<AppsettingsConfigurations> options) : IPaymentServiceClient
+    public class PaymentServiceClient(HttpClient client) : IPaymentServiceClient
     {
-        private readonly HttpClient _httpClient = httpClient;
+        public async Task<RegisterPaymentCardResponse> RegisterPaymentCardAsync(RegisterPaymentCardRequest request) =>
+             await Task.FromResult(new RegisterPaymentCardResponse());
 
-        private readonly string _couponCepUrl = string.Empty;
-
-        public async Task<RegisterPaymentResponse> RegisterPaymentAsync(RegisterPaymentRequest request)
-        {
-            return await Task.FromResult(new RegisterPaymentResponse());
-        }
+        public async Task<RegisterPaymentPixResponse> RegisterPaymentPixAsync(RegisterPaymentPixRequest request) =>
+             await Task.FromResult(new RegisterPaymentPixResponse());
     }
 }
