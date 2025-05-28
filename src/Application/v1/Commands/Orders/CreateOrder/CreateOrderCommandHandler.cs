@@ -80,10 +80,10 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder
         {
             try
             {
-                var debitCoupon = _paymentService.DebitCouponCodeAsync(couponCode: request.CouponCode, userId: request.UserId);
-                var updateProductsStockTask = UpdateProductsStock(order.Products);
+                if (!string.IsNullOrEmpty(order.CouponCode))
+                    await _paymentService.DebitCouponCodeAsync(couponCode: request.CouponCode, userId: order.UserId);
 
-                await Task.WhenAll(debitCoupon, updateProductsStockTask);
+                await UpdateProductsStock(order.Products);
             }
             catch (Exception ex)
             {

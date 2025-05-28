@@ -1,5 +1,4 @@
 ﻿using Fatec.Store.Framework.Core.Bases.v1.Controllers;
-using Fatec.Store.Framework.Core.Enums;
 using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
 using Fatec.Store.Orders.Application.v1.Commands.Orders.PatchOrder;
 using Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersByCustomerId;
