@@ -8,6 +8,6 @@
 
         string GeneratePixPayload(string customerName, string amount);
 
-        byte[] GenerateQrCodeZXing(string payload);
+        byte[] GenerateQrCode(string payload);
     }
 }

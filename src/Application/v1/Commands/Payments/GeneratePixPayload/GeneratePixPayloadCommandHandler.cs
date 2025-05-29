@@ -26,13 +26,22 @@ namespace Fatec.Store.Orders.Application.v1.Commands.Payments.GeneratePixPayload
 
         public override async Task<GeneratePixPayloadCommandResponse> Handle(GeneratePixPayloadCommand request, CancellationToken cancellationToken)
         {
-            var payload = _paymentDomainService.GeneratePixPayload(_customerName, request.Amount.ToString("0.00", CultureInfo.InvariantCulture));
-            var qrCode = _paymentDomainService.GenerateQrCodeZXing(payload);
-            return new()
+            try
             {
-                PixPayload = payload,
-                PixQrCode = $"data:image/png;base64,{Convert.ToBase64String(qrCode)}",
-            };
+                var payload = _paymentDomainService.GeneratePixPayload(_customerName, request.Amount.ToString("0.00", CultureInfo.InvariantCulture));
+                var qrCode = _paymentDomainService.GenerateQrCode(payload);
+                return new()
+                {
+                    PixPayload = payload,
+                    PixQrCode = $"data:image/png;base64,{Convert.ToBase64String(qrCode)}",
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Erro metodo {handler}.{method}", nameof(GeneratePixPayloadCommandHandler), nameof(Handle));
+
+                throw;   
+            }
         }
     }
 }

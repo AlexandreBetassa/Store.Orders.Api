@@ -14,7 +14,7 @@ namespace Fatec.Store.Orders.Domain.v1.Services
     {
         private readonly HttpClient _httpClient = httpClient;
 
-        private readonly string _couponCepUrl = options.Value.ServiceClients.Coupon;
+        private readonly string _couponUrl = options.Value.ServiceClients.Coupon;
 
         public async Task DebitCouponCodeAsync(DebitCouponCodeRequest debitCouponCodeRequest)
         {
@@ -23,12 +23,12 @@ namespace Fatec.Store.Orders.Domain.v1.Services
                 Encoding.UTF8,
                 "application/json");
 
-            await _httpClient.PatchAsync($"{_couponCepUrl}", content);
+            await _httpClient.PatchAsync($"{_couponUrl}", content);
         }
 
         public async Task<GetByCouponCodeResponse?> GetCouponByCouponCodeAsync(string couponCode)
         {
-            var response = await _httpClient.GetAsync($"{_couponCepUrl}/{couponCode}");
+            var response = await _httpClient.GetAsync($"{_couponUrl}/{couponCode}");
 
             if (response.StatusCode.Equals(HttpStatusCode.NoContent)) return new();
 

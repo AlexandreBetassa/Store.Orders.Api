@@ -1,5 +1,4 @@
 ﻿using Fatec.Store.Framework.Core.Bases.v1.Controllers;
-using Fatec.Store.Framework.Core.Enums;
 using Fatec.Store.Orders.Application.v1.Commands.Orders.CreateOrder;
 using Fatec.Store.Orders.Application.v1.Commands.Orders.PatchOrder;
 using Fatec.Store.Orders.Application.v1.Queries.Orders.GetOrdersByCustomerId;
@@ -16,7 +15,7 @@ namespace Fatec.Store.Orders.Api.Controllers
     public class OrdersController(IMediator mediator) : BaseController<OrdersController>(mediator)
     {
         [HttpPost]
-        [Authorize(Policy = "User")]
+        //[Authorize(Policy = "User")]
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderCommand request) =>
             await ExecuteAsync(() => Mediator.Send(request), HttpStatusCode.Created);
 

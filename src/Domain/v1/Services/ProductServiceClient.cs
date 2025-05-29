@@ -11,7 +11,7 @@ namespace Fatec.Store.Orders.Domain.v1.Services
     {
         private readonly HttpClient _httpClient = httpClient;
 
-        private readonly string _productCepUrl = options.Value.ServiceClients.Product;
+        private readonly string _productUrl = options.Value.ServiceClients.Product;
 
         public async Task UpdateProductsStockAsync(UpdateProductsStockRequest updateProductsStockRequest)
         {
@@ -22,7 +22,7 @@ namespace Fatec.Store.Orders.Domain.v1.Services
                 Encoding.UTF8,
                 "application/json");
 
-            await _httpClient.PutAsync($"{_productCepUrl}", content);
+            await _httpClient.PatchAsync($"{_productUrl}/stock", content);
         }
     }
 }
