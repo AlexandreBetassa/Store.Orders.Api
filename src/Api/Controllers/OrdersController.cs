@@ -15,7 +15,7 @@ namespace Fatec.Store.Orders.Api.Controllers
     public class OrdersController(IMediator mediator) : BaseController<OrdersController>(mediator)
     {
         [HttpPost]
-        [Authorize(Policy = "User")]
+        //[Authorize(Policy = "User")]
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderCommand request) =>
             await ExecuteAsync(() => Mediator.Send(request), HttpStatusCode.Created);
 
