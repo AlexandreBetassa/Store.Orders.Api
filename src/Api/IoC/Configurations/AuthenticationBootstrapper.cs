@@ -1,4 +1,6 @@
 ﻿using Fatec.Store.Framework.Core.Enums;
+using Fatec.Store.Orders.Domain.v1.Enum;
+using Fatec.Store.Orders.Infrastructure.CrossCutting.v1;
 using Fatec.Store.Orders.Infrastructure.CrossCutting.v1.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -42,8 +44,9 @@ namespace Fatec.Store.Orders.Api.IoC.Configurations
         private static IServiceCollection ConfigureAuthenticationBuilder(this IServiceCollection services, JwtConfiguration jwtConfig)
         {
             services.AddAuthorizationBuilder()
-                .AddPolicy("User", policy => policy.RequireRole(jwtConfig.WriteRoles))
-                .AddPolicy("User", policy => policy.RequireRole(jwtConfig.ReadRoles));
+            .AddPolicy(nameof(RolesUserEnum.All), policy => policy.RequireAuthenticatedUser())
+            .AddPolicy(nameof(RolesUserEnum.Admin), policy => policy.RequireRole(jwtConfig.AdminRoles))
+            .AddPolicy(nameof(RolesUserEnum.User), policy => policy.RequireRole(jwtConfig.UserRoles));
 
             return services;
         }
